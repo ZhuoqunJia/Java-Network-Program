@@ -19,21 +19,24 @@ public class Client {
         try {
             Socket socket = new Socket(InetAddress.getLocalHost(), 8080);
             OutputStream outputStream = socket.getOutputStream();
+            InputStream inputStream = socket.getInputStream();
+
             Scanner input = new Scanner(System.in);
+
+            String content = "客户端说：1";
+            outputStream.write(content.getBytes());
             while (true){
-                System.out.print("请输入内容：");
+//                System.out.print("请输入内容：");
                 /**
                  * input.next(): 获取控制台输入内容，以空格分隔
                  * input.nextLine(): 获取控制台整行输入内容
                  *
                  * 只要是next方法都会造成线程阻塞
                  */
-                String content = input.nextLine();
-                content = "客户端说：" + content;
-                outputStream.write(content.getBytes());
+//                String content = input.nextLine(); //会造成阻塞
 
 
-                InputStream inputStream = socket.getInputStream();
+
                 byte[] bytes = new byte[1024];
                 System.out.println(new String(bytes, 0, inputStream.read(bytes)));
             }
